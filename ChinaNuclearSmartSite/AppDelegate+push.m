@@ -8,9 +8,6 @@
 
 #import "AppDelegate+push.h"
 
-#import <AppKit/AppKit.h>
-
-
 @implementation AppDelegate (push)
 
 @end

@@ -9,12 +9,14 @@
 #ifndef DimensMacros_h
 #define DimensMacros_h
 
+
+#define theApp ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 /**
  尺寸定义的宏
  */
 #define DAY_CollectionViewCellHight 44
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
-//#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SizeScale (SCREEN_WIDTH == 414 ? 1.2 : (SCREEN_WIDTH == 320 ? 0.8 : 1))
 #define kHeight(value) value * SizeScale
 #define KRATE SCREEN_WIDTH/375.0

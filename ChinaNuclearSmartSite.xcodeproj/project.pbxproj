@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0A021BEB235AC26C0017D8BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A021BEA235AC26C0017D8BB /* AppDelegate.m */; };
-		0A021BEE235AC26C0017D8BB /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A021BED235AC26C0017D8BB /* SceneDelegate.m */; };
 		0A021BF1235AC26C0017D8BB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A021BF0235AC26C0017D8BB /* ViewController.m */; };
 		0A021BF4235AC26C0017D8BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A021BF2235AC26C0017D8BB /* Main.storyboard */; };
 		0A021BF6235AC2710017D8BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A021BF5235AC2710017D8BB /* Assets.xcassets */; };
@@ -16,6 +15,17 @@
 		0A021BFC235AC2710017D8BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A021BFB235AC2710017D8BB /* main.m */; };
 		0A021C06235AC2720017D8BB /* ChinaNuclearSmartSiteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A021C05235AC2720017D8BB /* ChinaNuclearSmartSiteTests.m */; };
 		0A021C11235AC2720017D8BB /* ChinaNuclearSmartSiteUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A021C10235AC2720017D8BB /* ChinaNuclearSmartSiteUITests.m */; };
+		0A021C20235ADE250017D8BB /* AppDelegate+push.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A021C1F235ADE250017D8BB /* AppDelegate+push.m */; };
+		0A021C38235ADF460017D8BB /* AVAsset+WMAdditons.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A021C31235ADF440017D8BB /* AVAsset+WMAdditons.m */; };
+		0A021C39235ADF460017D8BB /* UIAlertView+WMAddtions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A021C32235ADF450017D8BB /* UIAlertView+WMAddtions.m */; };
+		0A021C3A235ADF460017D8BB /* UIView+WMAddtions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A021C33235ADF450017D8BB /* UIView+WMAddtions.m */; };
+		0A021C3B235ADF460017D8BB /* NSTimer+WMAddtions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A021C35235ADF450017D8BB /* NSTimer+WMAddtions.m */; };
+		0A15C34423605C5900661D23 /* TFFileUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A15C34323605C5800661D23 /* TFFileUploadManager.m */; };
+		0A15C34723605C6000661D23 /* WMHttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A15C34523605C6000661D23 /* WMHttpManager.m */; };
+		0A15C34A23605D1200661D23 /* PhoneNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A15C34923605D1200661D23 /* PhoneNotification.m */; };
+		0A55C661235DB898003D1636 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A55C660235DB898003D1636 /* UserNotifications.framework */; };
+		0A55C663235DDB2E003D1636 /* UIColor+expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A55C662235DDB2E003D1636 /* UIColor+expanded.m */; };
+		32169AD5300A8ECD6C0C97AB /* libPods-ChinaNuclearSmartSite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63D58FDE34B2A349E3C2D3AB /* libPods-ChinaNuclearSmartSite.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,11 +46,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0A021BE6235AC26C0017D8BB /* ChinaNuclearSmartSite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChinaNuclearSmartSite.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A021BE6235AC26C0017D8BB /* 智慧工地.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "智慧工地.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A021BE9235AC26C0017D8BB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0A021BEA235AC26C0017D8BB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		0A021BEC235AC26C0017D8BB /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
-		0A021BED235AC26C0017D8BB /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		0A021BEF235AC26C0017D8BB /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		0A021BF0235AC26C0017D8BB /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		0A021BF3235AC26C0017D8BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -54,6 +62,32 @@
 		0A021C0C235AC2720017D8BB /* ChinaNuclearSmartSiteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChinaNuclearSmartSiteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A021C10235AC2720017D8BB /* ChinaNuclearSmartSiteUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChinaNuclearSmartSiteUITests.m; sourceTree = "<group>"; };
 		0A021C12235AC2720017D8BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0A021C1E235ADE250017D8BB /* AppDelegate+push.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+push.h"; sourceTree = "<group>"; };
+		0A021C1F235ADE250017D8BB /* AppDelegate+push.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+push.m"; sourceTree = "<group>"; };
+		0A021C30235ADF440017D8BB /* NSTimer+WMAddtions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+WMAddtions.h"; sourceTree = "<group>"; };
+		0A021C31235ADF440017D8BB /* AVAsset+WMAdditons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAsset+WMAdditons.m"; sourceTree = "<group>"; };
+		0A021C32235ADF450017D8BB /* UIAlertView+WMAddtions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+WMAddtions.m"; sourceTree = "<group>"; };
+		0A021C33235ADF450017D8BB /* UIView+WMAddtions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WMAddtions.m"; sourceTree = "<group>"; };
+		0A021C34235ADF450017D8BB /* UIView+WMAddtions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WMAddtions.h"; sourceTree = "<group>"; };
+		0A021C35235ADF450017D8BB /* NSTimer+WMAddtions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+WMAddtions.m"; sourceTree = "<group>"; };
+		0A021C36235ADF450017D8BB /* UIAlertView+WMAddtions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+WMAddtions.h"; sourceTree = "<group>"; };
+		0A021C37235ADF460017D8BB /* AVAsset+WMAdditons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAsset+WMAdditons.h"; sourceTree = "<group>"; };
+		0A15C3402360593300661D23 /* AppConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppConstant.h; sourceTree = "<group>"; };
+		0A15C341236059FA00661D23 /* NotificationMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationMacros.h; sourceTree = "<group>"; };
+		0A15C34223605C5800661D23 /* TFFileUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFFileUploadManager.h; sourceTree = "<group>"; };
+		0A15C34323605C5800661D23 /* TFFileUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFFileUploadManager.m; sourceTree = "<group>"; };
+		0A15C34523605C6000661D23 /* WMHttpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMHttpManager.m; sourceTree = "<group>"; };
+		0A15C34623605C6000661D23 /* WMHttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMHttpManager.h; sourceTree = "<group>"; };
+		0A15C34823605D1200661D23 /* PhoneNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNotification.h; sourceTree = "<group>"; };
+		0A15C34923605D1200661D23 /* PhoneNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNotification.m; sourceTree = "<group>"; };
+		0A55C65F235DB364003D1636 /* ChinaNuclearSmartSite.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ChinaNuclearSmartSite.entitlements; sourceTree = "<group>"; };
+		0A55C660235DB898003D1636 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		0A55C662235DDB2E003D1636 /* UIColor+expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+expanded.m"; sourceTree = "<group>"; };
+		0A55C664235DDB50003D1636 /* UIColor+expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+expanded.h"; sourceTree = "<group>"; };
+		0A55C665235DDC18003D1636 /* DimensMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DimensMacros.h; sourceTree = "<group>"; };
+		63D58FDE34B2A349E3C2D3AB /* libPods-ChinaNuclearSmartSite.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ChinaNuclearSmartSite.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		72DF0235463859B442AA9448 /* Pods-ChinaNuclearSmartSite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChinaNuclearSmartSite.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChinaNuclearSmartSite/Pods-ChinaNuclearSmartSite.release.xcconfig"; sourceTree = "<group>"; };
+		F7B8395E2E87A3E0124A12DA /* Pods-ChinaNuclearSmartSite.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChinaNuclearSmartSite.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChinaNuclearSmartSite/Pods-ChinaNuclearSmartSite.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +95,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A55C661235DB898003D1636 /* UserNotifications.framework in Frameworks */,
+				32169AD5300A8ECD6C0C97AB /* libPods-ChinaNuclearSmartSite.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,13 +124,15 @@
 				0A021C04235AC2720017D8BB /* ChinaNuclearSmartSiteTests */,
 				0A021C0F235AC2720017D8BB /* ChinaNuclearSmartSiteUITests */,
 				0A021BE7235AC26C0017D8BB /* Products */,
+				4C0D4E2473DDCC037DDD7894 /* Pods */,
+				DF9C89CCF350AAD912E05466 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		0A021BE7235AC26C0017D8BB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0A021BE6235AC26C0017D8BB /* ChinaNuclearSmartSite.app */,
+				0A021BE6235AC26C0017D8BB /* 智慧工地.app */,
 				0A021C01235AC2720017D8BB /* ChinaNuclearSmartSiteTests.xctest */,
 				0A021C0C235AC2720017D8BB /* ChinaNuclearSmartSiteUITests.xctest */,
 			);
@@ -104,10 +142,14 @@
 		0A021BE8235AC26C0017D8BB /* ChinaNuclearSmartSite */ = {
 			isa = PBXGroup;
 			children = (
+				0A55C65F235DB364003D1636 /* ChinaNuclearSmartSite.entitlements */,
+				0A021C21235ADEA90017D8BB /* Categories */,
+				0A021C22235ADEA90017D8BB /* Support */,
+				0A021C23235ADEA90017D8BB /* Supporting Files */,
 				0A021BE9235AC26C0017D8BB /* AppDelegate.h */,
 				0A021BEA235AC26C0017D8BB /* AppDelegate.m */,
-				0A021BEC235AC26C0017D8BB /* SceneDelegate.h */,
-				0A021BED235AC26C0017D8BB /* SceneDelegate.m */,
+				0A021C1E235ADE250017D8BB /* AppDelegate+push.h */,
+				0A021C1F235ADE250017D8BB /* AppDelegate+push.m */,
 				0A021BEF235AC26C0017D8BB /* ViewController.h */,
 				0A021BF0235AC26C0017D8BB /* ViewController.m */,
 				0A021BF2235AC26C0017D8BB /* Main.storyboard */,
@@ -137,6 +179,64 @@
 			path = ChinaNuclearSmartSiteUITests;
 			sourceTree = "<group>";
 		};
+		0A021C21235ADEA90017D8BB /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				0A021C37235ADF460017D8BB /* AVAsset+WMAdditons.h */,
+				0A021C31235ADF440017D8BB /* AVAsset+WMAdditons.m */,
+				0A021C30235ADF440017D8BB /* NSTimer+WMAddtions.h */,
+				0A021C35235ADF450017D8BB /* NSTimer+WMAddtions.m */,
+				0A021C36235ADF450017D8BB /* UIAlertView+WMAddtions.h */,
+				0A021C32235ADF450017D8BB /* UIAlertView+WMAddtions.m */,
+				0A021C34235ADF450017D8BB /* UIView+WMAddtions.h */,
+				0A021C33235ADF450017D8BB /* UIView+WMAddtions.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		0A021C22235ADEA90017D8BB /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				0A15C34823605D1200661D23 /* PhoneNotification.h */,
+				0A15C34923605D1200661D23 /* PhoneNotification.m */,
+				0A15C34223605C5800661D23 /* TFFileUploadManager.h */,
+				0A15C34323605C5800661D23 /* TFFileUploadManager.m */,
+				0A15C34623605C6000661D23 /* WMHttpManager.h */,
+				0A15C34523605C6000661D23 /* WMHttpManager.m */,
+				0A55C665235DDC18003D1636 /* DimensMacros.h */,
+				0A15C3402360593300661D23 /* AppConstant.h */,
+				0A15C341236059FA00661D23 /* NotificationMacros.h */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		0A021C23235ADEA90017D8BB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0A55C664235DDB50003D1636 /* UIColor+expanded.h */,
+				0A55C662235DDB2E003D1636 /* UIColor+expanded.m */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4C0D4E2473DDCC037DDD7894 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F7B8395E2E87A3E0124A12DA /* Pods-ChinaNuclearSmartSite.debug.xcconfig */,
+				72DF0235463859B442AA9448 /* Pods-ChinaNuclearSmartSite.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		DF9C89CCF350AAD912E05466 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0A55C660235DB898003D1636 /* UserNotifications.framework */,
+				63D58FDE34B2A349E3C2D3AB /* libPods-ChinaNuclearSmartSite.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -144,6 +244,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0A021C15235AC2720017D8BB /* Build configuration list for PBXNativeTarget "ChinaNuclearSmartSite" */;
 			buildPhases = (
+				047A51392AF63EA10F5791A5 /* [CP] Check Pods Manifest.lock */,
 				0A021BE2235AC26C0017D8BB /* Sources */,
 				0A021BE3235AC26C0017D8BB /* Frameworks */,
 				0A021BE4235AC26C0017D8BB /* Resources */,
@@ -154,7 +255,7 @@
 			);
 			name = ChinaNuclearSmartSite;
 			productName = ChinaNuclearSmartSite;
-			productReference = 0A021BE6235AC26C0017D8BB /* ChinaNuclearSmartSite.app */;
+			productReference = 0A021BE6235AC26C0017D8BB /* 智慧工地.app */;
 			productType = "com.apple.product-type.application";
 		};
 		0A021C00235AC2720017D8BB /* ChinaNuclearSmartSiteTests */ = {
@@ -262,15 +363,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		047A51392AF63EA10F5791A5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ChinaNuclearSmartSite-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0A021BE2235AC26C0017D8BB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A021C20235ADE250017D8BB /* AppDelegate+push.m in Sources */,
 				0A021BF1235AC26C0017D8BB /* ViewController.m in Sources */,
+				0A55C663235DDB2E003D1636 /* UIColor+expanded.m in Sources */,
 				0A021BEB235AC26C0017D8BB /* AppDelegate.m in Sources */,
+				0A15C34723605C6000661D23 /* WMHttpManager.m in Sources */,
+				0A15C34423605C5900661D23 /* TFFileUploadManager.m in Sources */,
 				0A021BFC235AC2710017D8BB /* main.m in Sources */,
-				0A021BEE235AC26C0017D8BB /* SceneDelegate.m in Sources */,
+				0A15C34A23605D1200661D23 /* PhoneNotification.m in Sources */,
+				0A021C38235ADF460017D8BB /* AVAsset+WMAdditons.m in Sources */,
+				0A021C39235ADF460017D8BB /* UIAlertView+WMAddtions.m in Sources */,
+				0A021C3B235ADF460017D8BB /* NSTimer+WMAddtions.m in Sources */,
+				0A021C3A235ADF460017D8BB /* UIView+WMAddtions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,33 +571,45 @@
 		};
 		0A021C16235AC2720017D8BB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F7B8395E2E87A3E0124A12DA /* Pods-ChinaNuclearSmartSite.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ChinaNuclearSmartSite/ChinaNuclearSmartSite.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YTFCAA955H;
 				INFOPLIST_FILE = ChinaNuclearSmartSite/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = TQ.ChinaNuclearSmartSite;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhhw.znh.yfb;
+				PRODUCT_NAME = "智慧工地";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		0A021C17235AC2720017D8BB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 72DF0235463859B442AA9448 /* Pods-ChinaNuclearSmartSite.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = ChinaNuclearSmartSite/ChinaNuclearSmartSite.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = YTFCAA955H;
 				INFOPLIST_FILE = ChinaNuclearSmartSite/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = TQ.ChinaNuclearSmartSite;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhhw.znh.yfb;
+				PRODUCT_NAME = "智慧工地";
+				PROVISIONING_PROFILE_SPECIFIER = zhhw.znh.yfb;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

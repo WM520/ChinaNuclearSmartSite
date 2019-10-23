@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "MBProgressHUD.h"
 
+
+#define theApp ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 #define HideTime   1.5f
 #define AnotherHideTime   12.0f
 #define Margin     10.0f
@@ -116,7 +118,7 @@ static PhoneNotification *sharedAppSettings = nil;
     _hud.margin = Margin;
     _hud.yOffset = YOffset;
     _hud.bezelView.color = [UIColor blackColor];
-    _hud.label.font = Font(14);
+    _hud.label.font = [UIFont systemFontOfSize:14];
     _hud.removeFromSuperViewOnHide = YES;
     _hud.userInteractionEnabled = NO;
 }
