@@ -9,7 +9,7 @@
 #ifndef DimensMacros_h
 #define DimensMacros_h
 
-
+#define kWeakSelf(type)  __weak typeof(type) weak##type = type;
 #define theApp ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 /**
  尺寸定义的宏
@@ -23,6 +23,7 @@
 //kStatusBarHeight
 //#define kStatusBarHeight (SCREEN_HEIGHT == 812.0 ? 44 : 20)
 #define kStatusBarHeight ((is_iPhone_X==YES || IS_IPHONE_Xr ==YES || IS_IPHONE_Xs== YES || IS_IPHONE_Xs_Max== YES) ? 44.0 : 20.0)
+#define kStatusHeight ((is_iPhone_X==YES || IS_IPHONE_Xr ==YES || IS_IPHONE_Xs== YES || IS_IPHONE_Xs_Max== YES) ? 24.0 : 0.0)
 #define kNavBarHeight    44
 //#define kSafeAreaTopHeight (SCREEN_HEIGHT == 812.0 ? 88 : 64)
 #define kSafeAreaTopHeight ((is_iPhone_X==YES || IS_IPHONE_Xr ==YES || IS_IPHONE_Xs== YES || IS_IPHONE_Xs_Max== YES) ? 88.0 : 64.0)

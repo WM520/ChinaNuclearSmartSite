@@ -9,6 +9,8 @@ pod 'UMCSecurityPlugins'
 pod 'Masonry', '~> 1.1.0'
 pod 'AFNetworking' , '~> 3.2.1'
 pod 'MBProgressHUD'
+pod 'TZImagePickerController', '~> 3.0.8'
+pod 'WebViewJavascriptBridge', '~> 6.0'
 
 target 'ChinaNuclearSmartSite' do
 

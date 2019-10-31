@@ -16,36 +16,44 @@ PODS:
     - AFNetworking/NSURLSession
   - Masonry (1.1.0)
   - MBProgressHUD (1.1.0)
+  - TZImagePickerController (3.0.9)
   - UMCCommon (2.1.1)
   - UMCPush (3.2.4):
     - UMCCommon
   - UMCSecurityPlugins (1.0.6)
+  - WebViewJavascriptBridge (6.0.3)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.2.1)
   - Masonry (~> 1.1.0)
   - MBProgressHUD
+  - TZImagePickerController (~> 3.0.8)
   - UMCCommon
   - UMCPush
   - UMCSecurityPlugins
+  - WebViewJavascriptBridge (~> 6.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
     - Masonry
     - MBProgressHUD
+    - TZImagePickerController
     - UMCCommon
     - UMCPush
     - UMCSecurityPlugins
+    - WebViewJavascriptBridge
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  TZImagePickerController: ea3e906af8caa7088f612ad673feb73cc6aa6bfc
   UMCCommon: 971f324a5a99c9d662ae040a815e7e3d7ef8b2a8
   UMCPush: 1edd856027dcf905333effb4040ace5d236a7316
   UMCSecurityPlugins: 0831a08f3988f3cea9f1d3a7626cd9bee4fef150
+  WebViewJavascriptBridge: 7f5bc4d3581e672e8f32bd0f812d54bc69bb8e29
 
-PODFILE CHECKSUM: 2c5c0bfd3e1c7eeda9cf6e0aae8813c19c688370
+PODFILE CHECKSUM: 6f60a146a12945866744d607255db2a884506ccd
 
 COCOAPODS: 1.5.3

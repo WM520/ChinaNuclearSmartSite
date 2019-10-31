@@ -26,6 +26,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     // Push组件基本功能配置
+    if (@available(iOS 13.0, *)) {
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDarkContent;
+    } else {
+        // Fallback on earlier versions
+        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    }
+//    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     UMessageRegisterEntity * entity = [[UMessageRegisterEntity alloc] init];
     //type是对推送的几个参数的选择，可以选择一个或者多个。默认是三个全部打开，即：声音，弹窗，角标
     entity.types = UMessageAuthorizationOptionBadge|UMessageAuthorizationOptionSound|UMessageAuthorizationOptionAlert;
@@ -70,10 +77,17 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
         [UMessage setAutoAlert:NO];
         //应用处于前台时的远程推送接受
         //必须加这句代码
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            // 需要在主线程执行的代码
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ROLODE" object:nil userInfo:userInfo];
+        });
         [UMessage didReceiveRemoteNotification:userInfo];
     }else{
         //应用处于前台时的本地推送接受
-        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            // 需要在主线程执行的代码
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ROLODE" object:nil userInfo:userInfo];
+        });
     }
     completionHandler(UNNotificationPresentationOptionSound|UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionAlert);
 }
@@ -84,9 +98,17 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         //应用处于后台时的远程推送接受
         //必须加这句代码
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            // 需要在主线程执行的代码
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ROLODE" object:nil userInfo:userInfo];
+        });
         [UMessage didReceiveRemoteNotification:userInfo];
     }else{
         //应用处于后台时的本地推送接受
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            // 需要在主线程执行的代码
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ROLODE" object:nil userInfo:userInfo];
+        });
     }
 }
 

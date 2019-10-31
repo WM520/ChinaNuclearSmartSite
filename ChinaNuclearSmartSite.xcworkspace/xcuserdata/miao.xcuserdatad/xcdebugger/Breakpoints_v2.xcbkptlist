@@ -7,64 +7,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0D57686C-66C3-451F-8F6B-275072C027E3"
+            uuid = "3B7E05EA-E14B-44D6-AB84-1CC7568E6F09"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ChinaNuclearSmartSite/AppDelegate.m"
+            filePath = "Pods/WebViewJavascriptBridge/WebViewJavascriptBridge/WebViewJavascriptBridge.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "-application:didReceiveRemoteNotification:fetchCompletionHandler:"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
+            landmarkName = "-_evaluateJavascript:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1511E2BB-967A-489E-8307-144FA09ED057"
+            uuid = "2655A685-480F-487C-9ED9-1277D3928EE2"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ChinaNuclearSmartSite/AppDelegate.m"
+            filePath = "Pods/WebViewJavascriptBridge/WebViewJavascriptBridge/WebViewJavascriptBridge.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "-webView:decidePolicyForNavigationAction:request:frame:decisionListener:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "476C463B-4B70-4313-9A05-118C53AB2A56"
+            uuid = "09A5FC6B-028F-4C99-96EF-D6E8D3DA706E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ChinaNuclearSmartSite/AppDelegate.m"
+            filePath = "ChinaNuclearSmartSite/ViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8F569D1D-9233-41E1-A186-62E53E595C65"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ChinaNuclearSmartSite/AppDelegate.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "-application:didRegisterForRemoteNotificationsWithDeviceToken:"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
+            landmarkName = "-userContentController:didReceiveScriptMessage:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
