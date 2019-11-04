@@ -32,6 +32,7 @@ TZImagePickerControllerDelegate>
 
 @implementation ViewController
 
+#pragma mark - lifeCycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -50,6 +51,7 @@ TZImagePickerControllerDelegate>
     [super viewWillDisappear:animated];
 }
 
+#pragma mark - private methods
 - (void)reloadUI:(NSNotification *)notification
 {
     NSDictionary * useInfo = notification.userInfo;
@@ -58,9 +60,10 @@ TZImagePickerControllerDelegate>
         [self.bestWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
     });
 }
+
 - (void)initWebView
 {
-    self.detailUrl = @"https://zhgd.hwgc.cn:8050";
+    self.detailUrl = APP_URL;
     WKWebViewConfiguration *config = [WKWebViewConfiguration new];
     //初始化偏好设置属性：preferences
     config.preferences = [WKPreferences new];
@@ -169,6 +172,8 @@ TZImagePickerControllerDelegate>
         userModel.projectId = @"";
         userModel.phone = @"";
         userModel.userId = @"";
+//        NSString * url = @"https://zhgd.hwgc.cn:8050/#/";
+//        [self.bestWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
         [NSKeyedArchiver archiveRootObject:userModel toFile:userInfoFile];
     } else {
         [NSKeyedArchiver archiveRootObject:userModel toFile:userInfoFile];
@@ -184,26 +189,19 @@ TZImagePickerControllerDelegate>
 {
     NSString *userInfoFile = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"userModel.archiver"];
     UserModel *unarchiveModel = [NSKeyedUnarchiver unarchiveObjectWithFile:userInfoFile];
-    if (unarchiveModel) {
-        NSDictionary * dic = @{
-            @"token":unarchiveModel.token,
-            @"projectId":unarchiveModel.projectId,
-            @"phone":unarchiveModel.phone,
-            @"userId":unarchiveModel.userId,
-            @"data":unarchiveModel.data
-        };
-        NSString * jsonString = [self dictionaryToJson: dic];
-        NSString * newString = [self noWhiteSpaceString:jsonString];
-        NSString *promptCode = [NSString stringWithFormat:@"getUserInfoToApp('%@')", newString];
-        [self.bestWebView evaluateJavaScript:promptCode completionHandler:^(id _Nullable data, NSError * _Nullable error) {
-                   
-        }];
-    } else {
-        NSString *promptCode = [NSString stringWithFormat:@"getUserInfoToApp('%@')", @""];
-        [self.bestWebView evaluateJavaScript:promptCode completionHandler:^(id _Nullable data, NSError * _Nullable error) {
-                   
-        }];
-    }
+    NSDictionary * dic = @{
+        @"token":unarchiveModel.token ? unarchiveModel.token : @"",
+        @"projectId":unarchiveModel.projectId ? unarchiveModel.projectId : @"",
+        @"phone":unarchiveModel.phone ? unarchiveModel.phone : @"",
+        @"userId":unarchiveModel.userId ? unarchiveModel.userId : @"",
+        @"data":unarchiveModel.data ? unarchiveModel.data : @""
+    };
+    NSString * jsonString = [self dictionaryToJson: dic];
+    NSString * newString = [self noWhiteSpaceString:jsonString];
+    NSString *promptCode = [NSString stringWithFormat:@"getUserInfoToApp('%@')", newString];
+    [self.bestWebView evaluateJavaScript:promptCode completionHandler:^(id _Nullable data, NSError * _Nullable error) {
+               
+    }];
 }
 
 - (NSString *)noWhiteSpaceString:(NSString *)str {
@@ -240,6 +238,28 @@ TZImagePickerControllerDelegate>
         mimeType = @"image/jpeg";
     }
     return [imageData base64EncodedStringWithOptions: 0];
+}
+
+- (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString
+{
+    if (jsonString == nil) {
+        return nil;
+    }
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
+    if(err) {
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    return dic;
+}
+
+- (NSString*)dictionaryToJson:(NSDictionary *)dic
+{
+    NSError *parseError = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
 #pragma mark - WKUIDelegate
@@ -284,28 +304,6 @@ TZImagePickerControllerDelegate>
     }
 }
 
-- (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString
-{
-    if (jsonString == nil) {
-        return nil;
-    }
-    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *err;
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
-    if(err) {
-        NSLog(@"json解析失败：%@",err);
-        return nil;
-    }
-    return dic;
-}
-
-- (NSString*)dictionaryToJson:(NSDictionary *)dic
-{
-    NSError *parseError = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
-    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-}
-
 #pragma mark - WKNavigationDelegate
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"estimatedProgress"]) {
@@ -322,21 +320,13 @@ TZImagePickerControllerDelegate>
                 progressV.hidden = YES;
             }];
         }
-    } else if ([keyPath isEqualToString:@"title"])
-    {
-        if (object == self.bestWebView)
-        {
-         
-                self.title = [self URLDecodedString:self.bestWebView.title];
-            }
-            
-        else
-        {
+    }  else if ([keyPath isEqualToString:@"title"]) {
+        if (object == self.bestWebView) {
+            self.title = [self URLDecodedString:self.bestWebView.title];
+        }  else {
             [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
         }
-    }
-    else
-    {
+    } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
@@ -379,13 +369,7 @@ TZImagePickerControllerDelegate>
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
     NSString *urlstr = navigationAction.request.URL.absoluteString;
-//    NSArray *headerKeys = navigationAction.request.allHTTPHeaderFields.allKeys;
-//    BOOL hasCookies = [headerKeys containsObject:@"Cookie"];
-//    if (!hasCookies && NSHTTPCookieStorage.sharedHTTPCookieStorage.cookies.count > 0) {
-//
-//    }
     if ([urlstr hasPrefix:@"iosaction://getQrCode"]) {
-//        [self getQrCode];
         decisionHandler(WKNavigationActionPolicyCancel);
     } else if ([urlstr hasPrefix:@"songshu://"]) {
         decisionHandler(WKNavigationActionPolicyCancel);
@@ -396,7 +380,6 @@ TZImagePickerControllerDelegate>
 
 -(NSString *)URLDecodedString:(NSString *)str
 {
-    //NSString *decodedString = [encodedString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding ];
     NSString *encodedString = str;
     NSString *decodedString  = (__bridge_transfer NSString *)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(NULL,(__bridge CFStringRef)encodedString,CFSTR(""),CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding));
     return decodedString;
@@ -412,17 +395,14 @@ TZImagePickerControllerDelegate>
 - (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation
 {
     progressV.hidden = YES;
-//    _bestWebView.frame = CGRectMake(0, kStatusHeight, SCREEN_WIDTH, SCREEN_HEIGHT  -kSafeAreaBottomHeight - kStatusHeight);
     [self.bestWebView.configuration.userContentController addScriptMessageHandler:self name:@"getQrCode"];
     [self.bestWebView.configuration.userContentController addScriptMessageHandler:self name:@"useCamera"];
     [self.bestWebView.configuration.userContentController addScriptMessageHandler:self name:@"setUserInfoToApp"];
     [self.bestWebView.configuration.userContentController addScriptMessageHandler:self name:@"getuserLoginInfoToAppIos"] ;
-     
-    
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    // OC 调用JS方法 method 的js代码可往下看
-           [self getUserInfoToApp];
-        });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+// OC 调用JS方法 method 的js代码可往下看
+       [self getUserInfoToApp];
+    });
 }
 
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
@@ -443,6 +423,43 @@ TZImagePickerControllerDelegate>
 //接收到输入框
 - (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(nullable NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable result))completionHandler{
     
+    NSData *jsonData = [prompt dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingMutableContainers
+                                                          error:&err];
+    if (!err) {
+        if([[dict objectForKey:@"selector"]isEqualToString:@"getAppVersion"]){
+            
+            NSString *userInfoFile = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"userModel.archiver"];
+             UserModel *unarchiveModel = [NSKeyedUnarchiver unarchiveObjectWithFile:userInfoFile];
+            
+            NSDictionary * dic = @{
+                @"token":unarchiveModel.token ? unarchiveModel.token : @"",
+                @"projectId":unarchiveModel.projectId ? unarchiveModel.projectId : @"",
+                @"phone":unarchiveModel.phone ? unarchiveModel.phone : @"",
+                @"userId":unarchiveModel.userId ? unarchiveModel.userId : @"",
+                @"data":unarchiveModel.data ?  unarchiveModel.data: @""
+            };
+            NSString * jsonString = [self dictionaryToJson: dic];
+            NSString * newString = [self noWhiteSpaceString:jsonString];
+            completionHandler(newString);
+            return;
+        } else if ([[dict objectForKey:@"selector"]isEqualToString:@"updateAppSkip"]) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.pgyer.com/HpDN"]];
+            return;
+        }
+    }
+
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:prompt message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.text = defaultText;
+    }];
+    [alertController addAction:([UIAlertAction actionWithTitle:@"完成" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler(alertController.textFields[0].text?:@"");
+    }])];
+
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error
@@ -455,7 +472,5 @@ TZImagePickerControllerDelegate>
 {
     return nil;
 }
-#pragma mark - getter or setter
-
 
 @end

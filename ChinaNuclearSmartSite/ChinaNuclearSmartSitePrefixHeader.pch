@@ -16,5 +16,6 @@
 #import "UIColor+expanded.h"
 #import "DimensMacros.h"
 #import <TZImagePickerController.h>
+#import "AppConstant.h"
 
 #endif /* ChinaNuclearSmartSitePrefixHeader_pch */
