@@ -36,10 +36,14 @@
     UMessageRegisterEntity * entity = [[UMessageRegisterEntity alloc] init];
     //type是对推送的几个参数的选择，可以选择一个或者多个。默认是三个全部打开，即：声音，弹窗，角标
     entity.types = UMessageAuthorizationOptionBadge|UMessageAuthorizationOptionSound|UMessageAuthorizationOptionAlert;
-    [UNUserNotificationCenter currentNotificationCenter].delegate=self;
-    [UMessage registerForRemoteNotificationsWithLaunchOptions:launchOptions Entity:entity     completionHandler:^(BOOL granted, NSError * _Nullable error) {
+    if (@available(iOS 10.0, *)) {
+        [UNUserNotificationCenter currentNotificationCenter].delegate=self;
+    } else {
+        // Fallback on earlier versions
+    }
+    [UMessage registerForRemoteNotificationsWithLaunchOptions:launchOptions Entity:entity  completionHandler:^(BOOL granted, NSError * _Nullable error) {
         if (granted) {
-            
+
         }else{
             
         }

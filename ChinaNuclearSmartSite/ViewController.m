@@ -11,6 +11,7 @@
 #import <JavaScriptCore/JavaScriptCore.h>
 #import "ZFScanViewController.h"
 #import "UserModel.h"
+#import <UMPush/UMessage.h>
 //#import <WebViewJavascriptBridge.h>
 
 @interface ViewController ()
@@ -27,7 +28,7 @@ TZImagePickerControllerDelegate>
 @property (nonatomic, strong) JSContext *jsContent;
 //@property (nonatomic, strong) WebViewJavascriptBridge * bridge;
 @property (nonatomic, strong) WKUserContentController *userContentController;
-
+@property (nonatomic, copy) NSString *count;
 @end
 
 @implementation ViewController
@@ -73,10 +74,45 @@ TZImagePickerControllerDelegate>
     config.preferences.javaScriptEnabled = YES;
     //不通过用户交互，是否可以打开窗口
     config.preferences.javaScriptCanOpenWindowsAutomatically = YES;
+    config.allowsInlineMediaPlayback = YES;
+    if (@available(iOS 10.0, *)) {
+        config.mediaTypesRequiringUserActionForPlayback = NO;
+    }
+    
+    
+    NSString*css = @"body{-webkit-user-select:none;-webkit-user-drag:none;}";
+
+    //css 选中样式取消
+
+    NSMutableString*javascript = [NSMutableString string];
+
+    [javascript appendString:@"var style = document.createElement('style');"];
+
+    [javascript appendString:@"style.type = 'text/css';"];
+
+    [javascript appendFormat:@"var cssContent = document.createTextNode('%@');", css];
+
+    [javascript appendString:@"style.appendChild(cssContent);"];
+
+    [javascript appendString:@"document.body.appendChild(style);"];
+
+    [javascript appendString:@"document.documentElement.style.webkitUserSelect='none';"];//禁止选择
+
+    [javascript appendString:@"document.documentElement.style.webkitTouchCallout='none';"];//禁止长按
+
+    //javascript 注入
+
+    WKUserScript *noneSelectScript = [[WKUserScript alloc] initWithSource:javascript
+
+    injectionTime:WKUserScriptInjectionTimeAtDocumentEnd
+
+    forMainFrameOnly:YES];
+    
     
     //这个类主要用来做native与JavaScript的交互管理
     WKUserContentController *userContentController = [[WKUserContentController alloc] init];
     config.userContentController = userContentController;
+    [userContentController addUserScript:noneSelectScript];
     self.userContentController = userContentController;
 
     _bestWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT  -kSafeAreaBottomHeight - kStatusBarHeight) configuration:config];
@@ -142,9 +178,28 @@ TZImagePickerControllerDelegate>
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:weakself];
     // 是否允许显示视频
     imagePickerVc.allowPickingVideo = NO;
-    imagePickerVc.maxImagesCount = 1;
+    if ([_count intValue] > 0) {
+        imagePickerVc.maxImagesCount = [_count intValue];
+    } else {
+        imagePickerVc.maxImagesCount = 1;
+    }
+    
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
-        NSString * pictureDataString = [weakself image2DataURL:photos[0]];
+//        NSString * pictureDataString = [weakself image2DataURL:photos[0]];
+        NSString * pictureDataString = @"";
+        if (photos.count == 1) {
+              pictureDataString = [weakself image2DataURL:photos[0]];
+          } else {
+              NSMutableString * tem = [NSMutableString stringWithString:@"["];
+              for (int i = 0; i < photos.count; i++) {
+                  if ((i + 1) ==  photos.count) {
+                      [tem appendString:[NSString stringWithFormat:@"%@]", [weakself image2DataURL:photos[i]]]];
+                  } else {
+                      [tem appendString:[NSString stringWithFormat:@"%@,", [weakself image2DataURL:photos[i]]]];
+                  }
+              }
+              pictureDataString = [tem copy];
+          }
         NSString *promptCode = [NSString stringWithFormat:@"getPhtotoValueIos('%@')", pictureDataString];
         [self.bestWebView evaluateJavaScript:promptCode completionHandler:^(id _Nullable data, NSError * _Nullable error) {
                  
@@ -168,6 +223,11 @@ TZImagePickerControllerDelegate>
     NSString * string = [userModel.data objectForKey:@"logStatus"];
     
     if ([string isEqualToString:@"dengchu"]) {
+        // 移除
+        [UMessage removeAlias:[[NSUserDefaults standardUserDefaults] objectForKey:@"phone"] type:@"UMENG_USER" response:^(id  _Nonnull responseObject, NSError * _Nonnull error) {
+            NSLog(@"responseObject = %@, error = %@", responseObject, error);
+        }];
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"phone"];
         userModel.token = @"";
         userModel.projectId = @"";
         userModel.phone = @"";
@@ -177,6 +237,14 @@ TZImagePickerControllerDelegate>
         [NSKeyedArchiver archiveRootObject:userModel toFile:userInfoFile];
     } else {
         [NSKeyedArchiver archiveRootObject:userModel toFile:userInfoFile];
+        [[NSUserDefaults standardUserDefaults] setObject:userModel.phone forKey:@"phone"];
+        //添加别名
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"phone"] != nil) {
+            [UMessage addAlias:[[NSUserDefaults standardUserDefaults] objectForKey:@"phone"] type:@"UMENG_USER" response:^(id  _Nonnull responseObject, NSError * _Nonnull error) {
+                  NSLog(@"responseObject = %@, error = %@", responseObject, error);
+            }];
+        }
+        
         //取出来看一下
         UserModel *unarchiveModel = [NSKeyedUnarchiver unarchiveObjectWithFile:userInfoFile];
         if (unarchiveModel) {
@@ -225,16 +293,55 @@ TZImagePickerControllerDelegate>
             alpha == kCGImageAlphaPremultipliedLast);
 }
 
+- (UIImage *)compressImage:(UIImage *)image toByte:(NSUInteger)maxLength {
+    // Compress by quality
+    CGFloat compression = 1;
+    NSData *data = UIImageJPEGRepresentation(image, compression);
+    if (data.length < maxLength) return image;
+    
+    CGFloat max = 1;
+    CGFloat min = 0;
+    for (int i = 0; i < 6; ++i) {
+        compression = (max + min) / 2;
+        data = UIImageJPEGRepresentation(image, compression);
+        if (data.length < maxLength * 0.9) {
+            min = compression;
+        } else if (data.length > maxLength) {
+            max = compression;
+        } else {
+            break;
+        }
+    }
+    UIImage *resultImage = [UIImage imageWithData:data];
+    if (data.length < maxLength) return resultImage;
+    
+    // Compress by size
+    NSUInteger lastDataLength = 0;
+    while (data.length > maxLength && data.length != lastDataLength) {
+        lastDataLength = data.length;
+        CGFloat ratio = (CGFloat)maxLength / data.length;
+        CGSize size = CGSizeMake((NSUInteger)(resultImage.size.width * sqrtf(ratio)),
+                                 (NSUInteger)(resultImage.size.height * sqrtf(ratio))); // Use NSUInteger to prevent white blank
+        UIGraphicsBeginImageContext(size);
+        [resultImage drawInRect:CGRectMake(0, 0, size.width, size.height)];
+        resultImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        data = UIImageJPEGRepresentation(resultImage, compression);
+    }
+    
+    return resultImage;
+}
+
 - (NSString *) image2DataURL: (UIImage *) image
 {
     NSData *imageData = nil;
     NSString *mimeType = nil;
 
     if ([self imageHasAlpha: image]) {
-        imageData = UIImagePNGRepresentation(image);
+        imageData = UIImagePNGRepresentation([self compressImage:image toByte:300 * 1024]);
         mimeType = @"image/png";
     } else {
-        imageData = UIImageJPEGRepresentation(image, 0.4f);
+        imageData = UIImageJPEGRepresentation([self compressImage:image toByte:300 * 1024], 0.4f);
         mimeType = @"image/jpeg";
     }
     return [imageData base64EncodedStringWithOptions: 0];
@@ -294,6 +401,7 @@ TZImagePickerControllerDelegate>
         [self getQrCode];
     } else if ([message.name isEqualToString:@"useCamera"]) {
         // 调用原生获取相片功能
+        _count = message.body;
         [self useCamera];
     } else if ([message.name isEqualToString:@"setUserInfoToApp"]) {
         // 存取登录信息
@@ -403,6 +511,22 @@ TZImagePickerControllerDelegate>
 // OC 调用JS方法 method 的js代码可往下看
        [self getUserInfoToApp];
     });
+    
+    // 禁用长按效果
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+          
+          for (UIView *view in self.bestWebView.subviews) {
+              
+              if ([NSStringFromClass([view class]) isEqualToString:@"WKScrollView"]) {
+                  
+                  for (UIGestureRecognizer *gesture in view.gestureRecognizers) {
+                      if ([NSStringFromClass([gesture class]) isEqualToString:@"UILongPressGestureRecognizer"]) {
+                          [view removeGestureRecognizer:gesture];
+                      }
+                  }
+              }
+          }
+      });
 }
 
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
@@ -446,7 +570,11 @@ TZImagePickerControllerDelegate>
             completionHandler(newString);
             return;
         } else if ([[dict objectForKey:@"selector"]isEqualToString:@"updateAppSkip"]) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.pgyer.com/HpDN"]];
+            NSArray * temA = [dict objectForKey:@"params"];
+            NSDictionary * urlDic = temA[0];
+            NSString * url = [urlDic objectForKey:@"url"];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+            completionHandler(@"");
             return;
         }
     }
