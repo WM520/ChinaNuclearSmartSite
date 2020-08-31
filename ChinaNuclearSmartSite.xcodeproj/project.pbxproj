@@ -809,7 +809,7 @@
 				PRODUCT_NAME = "智慧工地";
 				PROVISIONING_PROFILE_SPECIFIER = zhhw.znh.yfb;
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64e arm64";
 			};
 			name = Debug;
 		};
@@ -840,7 +840,7 @@
 				PRODUCT_NAME = "智慧工地";
 				PROVISIONING_PROFILE_SPECIFIER = zhhw.znh.yfb;
 				TARGETED_DEVICE_FAMILY = 1;
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64e arm64";
 			};
 			name = Release;
 		};
