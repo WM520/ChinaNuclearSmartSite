@@ -13,13 +13,16 @@
 #import "UserModel.h"
 #import <UMPush/UMessage.h>
 //#import <WebViewJavascriptBridge.h>
+#import <HikVideoPlayer/HikVideoPlayer.h>
+#import <HikVideoPlayer/HVPError.h>
 
 @interface ViewController ()
 <WKNavigationDelegate,
 WKUIDelegate,
 UIScrollViewDelegate,
 WKScriptMessageHandler,
-TZImagePickerControllerDelegate>
+TZImagePickerControllerDelegate,
+HVPPlayerDelegate>
 {
     UIProgressView *progressV;
 }
@@ -29,6 +32,8 @@ TZImagePickerControllerDelegate>
 //@property (nonatomic, strong) WebViewJavascriptBridge * bridge;
 @property (nonatomic, strong) WKUserContentController *userContentController;
 @property (nonatomic, copy) NSString *count;
+@property (nonatomic, strong) HVPPlayer *player;
+
 @end
 
 @implementation ViewController
@@ -39,6 +44,11 @@ TZImagePickerControllerDelegate>
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     [self initWebView];
+    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, SCREEN_WIDTH, 400)];
+    [self.view addSubview:contentView];
+    _player = [[HVPPlayer alloc] initWithPlayView:contentView];
+    _player.delegate = self;
+    [_player startRealPlay:@"rtsp://221.130.29.224:554/openUrl/uaOMHgk"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadUI:) name:@"ROLODE" object:nil];
 }
 
@@ -115,7 +125,7 @@ TZImagePickerControllerDelegate>
     [userContentController addUserScript:noneSelectScript];
     self.userContentController = userContentController;
 
-    _bestWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT  -kSafeAreaBottomHeight - kStatusBarHeight) configuration:config];
+    _bestWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight + 400, SCREEN_WIDTH, SCREEN_HEIGHT  -kSafeAreaBottomHeight - kStatusBarHeight) configuration:config];
     _bestWebView.backgroundColor = [UIColor whiteColor];
     _bestWebView.scrollView.delegate = self;
     _bestWebView.navigationDelegate = self;
@@ -601,4 +611,15 @@ TZImagePickerControllerDelegate>
     return nil;
 }
 
+#pragma mark - setter or getter
+//- (HVPPlayer *)player
+//{
+//    if (!_player) {
+//        _player = [[HVPPlayer alloc] initWithPlayView:self.view];
+//        _player.delegate = self;
+//    }
+//    return _player;
+//}
+
 @end
+

@@ -46,6 +46,8 @@
 		0A55C663235DDB2E003D1636 /* UIColor+expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A55C662235DDB2E003D1636 /* UIColor+expanded.m */; };
 		0A92183623613A2F00AFD08B /* AppJSObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A92183523613A2F00AFD08B /* AppJSObject.m */; };
 		0A92183F2362DDB000AFD08B /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A92183E2362DDB000AFD08B /* WebViewController.m */; };
+		0AF6670124FCE97500DE05F5 /* HikVideoPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF666FC24FCE4A100DE05F5 /* HikVideoPlayer.framework */; };
+		0AF6670224FCE97500DE05F5 /* HikVideoPlayer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF666FC24FCE4A100DE05F5 /* HikVideoPlayer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		32169AD5300A8ECD6C0C97AB /* libPods-ChinaNuclearSmartSite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63D58FDE34B2A349E3C2D3AB /* libPods-ChinaNuclearSmartSite.a */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +75,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				0AF6670224FCE97500DE05F5 /* HikVideoPlayer.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -150,6 +153,7 @@
 		0A92183523613A2F00AFD08B /* AppJSObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppJSObject.m; sourceTree = "<group>"; };
 		0A92183D2362DDB000AFD08B /* WebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		0A92183E2362DDB000AFD08B /* WebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		0AF666FC24FCE4A100DE05F5 /* HikVideoPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HikVideoPlayer.framework; sourceTree = "<group>"; };
 		63D58FDE34B2A349E3C2D3AB /* libPods-ChinaNuclearSmartSite.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ChinaNuclearSmartSite.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		72DF0235463859B442AA9448 /* Pods-ChinaNuclearSmartSite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChinaNuclearSmartSite.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChinaNuclearSmartSite/Pods-ChinaNuclearSmartSite.release.xcconfig"; sourceTree = "<group>"; };
 		F7B8395E2E87A3E0124A12DA /* Pods-ChinaNuclearSmartSite.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChinaNuclearSmartSite.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChinaNuclearSmartSite/Pods-ChinaNuclearSmartSite.debug.xcconfig"; sourceTree = "<group>"; };
@@ -162,6 +166,7 @@
 			files = (
 				0A55C661235DB898003D1636 /* UserNotifications.framework in Frameworks */,
 				32169AD5300A8ECD6C0C97AB /* libPods-ChinaNuclearSmartSite.a in Frameworks */,
+				0AF6670124FCE97500DE05F5 /* HikVideoPlayer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,6 +212,7 @@
 		0A021BE8235AC26C0017D8BB /* ChinaNuclearSmartSite */ = {
 			isa = PBXGroup;
 			children = (
+				0AF666FC24FCE4A100DE05F5 /* HikVideoPlayer.framework */,
 				0A55C65F235DB364003D1636 /* ChinaNuclearSmartSite.entitlements */,
 				0A021C21235ADEA90017D8BB /* Categories */,
 				0A021C22235ADEA90017D8BB /* Support */,
@@ -788,9 +794,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ChinaNuclearSmartSite/ChinaNuclearSmartSite.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = YTFCAA955H;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8S3RQ58XP4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -805,9 +811,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zhhw.znh.yfb;
+				PRODUCT_BUNDLE_IDENTIFIER = com.songshu.IntellectSupply;
 				PRODUCT_NAME = "智慧工地";
-				PROVISIONING_PROFILE_SPECIFIER = zhhw.znh.yfb;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s arm64e arm64";
 			};
