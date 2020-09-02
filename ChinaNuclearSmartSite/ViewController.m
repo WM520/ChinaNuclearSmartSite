@@ -16,6 +16,8 @@
 #import <HikVideoPlayer/HikVideoPlayer.h>
 #import <HikVideoPlayer/HVPError.h>
 
+#define PLAYER_HIGHT 300
+
 @interface ViewController ()
 <WKNavigationDelegate,
 WKUIDelegate,
@@ -33,6 +35,13 @@ HVPPlayerDelegate>
 @property (nonatomic, strong) WKUserContentController *userContentController;
 @property (nonatomic, copy) NSString *count;
 @property (nonatomic, strong) HVPPlayer *player;
+@property (nonatomic, strong) UIView *contentView;
+@property (nonatomic, strong) UIView *playerView;
+@property (nonatomic, strong) UIButton *openButton; // 打开全屏按钮
+@property (nonatomic, assign) BOOL isFullScreen;   /// 是否全屏标记
+@property (nonatomic, assign) CGRect playerFrame;  /// 记录原始frame
+@property (nonatomic, strong) UIView *playerSuperView;
+@property (nonatomic, assign) CGRect fullScreenBtnFrame;
 
 @end
 
@@ -44,12 +53,21 @@ HVPPlayerDelegate>
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     [self initWebView];
-    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, SCREEN_WIDTH, 400)];
-    [self.view addSubview:contentView];
-    _player = [[HVPPlayer alloc] initWithPlayView:contentView];
-    _player.delegate = self;
-    [_player startRealPlay:@"rtsp://221.130.29.224:554/openUrl/uaOMHgk"];
+//    rtsp://221.130.29.224:554/openUrl/uaOMHgk
+//    rtsp://221.130.29.224:554/openUrl/GBaZnva
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadUI:) name:@"ROLODE" object:nil];
+}
+
+/**
+ 播放状态回调
+
+ @param player 当前播放器
+ @param playStatus 播放状态
+ @param errorCode 错误码
+ */
+- (void)player:(HVPPlayer *)player playStatus:(HVPPlayStatus)playStatus errorCode:(HVPErrorCode)errorCode
+{
+//    NSLog(@"------- %ld", (long)errorCode);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -71,6 +89,206 @@ HVPPlayerDelegate>
         [self.bestWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
     });
 }
+
+- (void)addPlayer:(id)vaule
+{
+    [self.contentView removeFromSuperview];
+    self.contentView = nil;
+    _player = nil;
+    _playerView = nil;
+    _isFullScreen = NO;
+    
+    
+    NSData *jsonData = [vaule dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingMutableContainers
+                                                          error:&err];
+    
+    if ([[dic allKeys] containsObject:@"videoUrl"]) {
+        id url = [dic objectForKey:@"videoUrl"];
+        if (url == [NSNull null]) {
+            self.bestWebView.frame = CGRectMake(0, kStatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT  - kStatusBarHeight - kSafeAreaBottomHeight);
+            return;
+        }
+    }
+    
+    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, PLAYER_HIGHT)];
+    [self.view addSubview:contentView];
+    self.contentView = contentView;
+    
+    
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, 50, 44)];
+    [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    [backButton setImageEdgeInsets:UIEdgeInsetsMake(12, 15, 12, 15)];
+    [contentView addSubview:backButton];
+    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, kStatusBarHeight, SCREEN_WIDTH - 200, 44)];
+    titleLabel.text = [[dic allKeys] containsObject:@"title"] ? [dic objectForKey:@"title"] : @"";
+    titleLabel.textAlignment = NSTextAlignmentLeft;
+    titleLabel.textColor = [UIColor colorWithHexString:@"#000000"];
+    titleLabel.font = [UIFont systemFontOfSize:15];
+    [contentView addSubview:titleLabel];
+//
+    UIView *playerView = [[UIView alloc] initWithFrame:CGRectMake(0, kSafeAreaTopHeight, SCREEN_WIDTH, PLAYER_HIGHT - kSafeAreaTopHeight)];
+    [contentView addSubview:playerView];
+    self.playerView = playerView;
+
+    _player = [[HVPPlayer alloc] initWithPlayView:playerView];
+    _player.delegate = self;
+    [_player startRealPlay:[[dic allKeys] containsObject:@"videoUrl"] ? [[dic objectForKey:@"videoUrl"] stringByReplacingOccurrencesOfString:@"'" withString:@""] : @""];
+    
+    self.openButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 40, PLAYER_HIGHT - 40, 40, 40)];
+    self.openButton.backgroundColor = [UIColor colorWithHexString:@"#E2E2E2"];
+    self.openButton.alpha = 0.6;
+    [self.openButton setImage:[UIImage imageNamed:@"open"] forState:UIControlStateNormal];
+    [contentView addSubview:self.openButton];
+    [self.openButton addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.bestWebView.frame = CGRectMake(0, PLAYER_HIGHT, SCREEN_WIDTH, SCREEN_HEIGHT  - PLAYER_HIGHT - kSafeAreaBottomHeight);
+}
+
+// 页面返回
+- (void)back
+{
+//    hvrTopage
+    NSString *promptCode = @"hvrTopage()";
+    [self.bestWebView evaluateJavaScript:promptCode completionHandler:^(id _Nullable data, NSError * _Nullable error) {
+        [self.contentView removeFromSuperview];
+        self.contentView = nil;
+        self.player = nil;
+        self.playerView = nil;
+        self.openButton = nil;
+        self.bestWebView.frame = CGRectMake(0, kStatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT  - kStatusBarHeight - kSafeAreaBottomHeight);
+    }];
+}
+
+- (void)onClick
+{
+    if (!_isFullScreen) {
+        [self entryFullScreen];
+        
+    } else {
+        [self exitFullScreen];
+    }
+}
+
+// 进入全屏模式
+- (void)entryFullScreen
+{
+    if (self.isFullScreen) {
+        return;
+    }
+    
+    self.bestWebView.hidden = YES;
+    self.playerSuperView = self.playerView.superview;
+    self.playerFrame = self.playerView.frame;
+    self.fullScreenBtnFrame = self.openButton.frame;
+    
+    CGRect rectInWindow = [self.playerView convertRect:self.playerView.bounds toView:[UIApplication sharedApplication].keyWindow];
+    CGRect btnRect = [self.openButton convertRect:self.openButton.bounds toView:[UIApplication sharedApplication].keyWindow];
+    [self.playerView removeFromSuperview];
+    [self.openButton removeFromSuperview];
+    self.playerView.frame = rectInWindow;
+    self.openButton.frame = CGRectMake(0, SCREEN_HEIGHT - 40, 40, 40);
+
+    [[UIApplication sharedApplication].keyWindow addSubview:self.playerView];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.openButton];
+    //
+    [UIView animateWithDuration:0.3 animations:^{
+        self.playerView.transform = CGAffineTransformMakeRotation(M_PI_2);
+        self.openButton.transform = CGAffineTransformMakeRotation(M_PI_2);
+        self.playerView.bounds = CGRectMake(0, 0, CGRectGetHeight([UIApplication sharedApplication].keyWindow.bounds), CGRectGetWidth([UIApplication sharedApplication].keyWindow.bounds));
+        self.playerView.center = CGPointMake(CGRectGetMidX([UIApplication sharedApplication].keyWindow.bounds), CGRectGetMidY([UIApplication sharedApplication].keyWindow.bounds));
+    } completion:^(BOOL finished) {
+        [self.openButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
+        self.isFullScreen = YES;
+    }];
+    
+}
+
+// 退出全屏模式
+- (void)exitFullScreen
+{
+    self.bestWebView.hidden = NO;
+    
+    if (!self.isFullScreen) {
+        return;
+    }
+    
+    CGRect frame = [self.playerSuperView convertRect:self.playerFrame toView:[UIApplication sharedApplication].keyWindow];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.playerView.transform = CGAffineTransformIdentity;
+        self.openButton.transform = CGAffineTransformIdentity;
+        self.playerView.frame = frame;
+        self.openButton.frame = self.fullScreenBtnFrame;
+    } completion:^(BOOL finished) {
+        [self.playerView removeFromSuperview];
+        [self.openButton removeFromSuperview];
+        self.playerView.frame = self.playerFrame;
+        [self.playerSuperView addSubview:self.playerView];
+        [self.playerSuperView addSubview:self.openButton];
+        self.isFullScreen = NO;
+        [self.openButton setImage:[UIImage imageNamed:@"open"] forState:UIControlStateNormal];
+    }];
+    
+}
+
+/// 进入全屏模式
+//- (void)entryFullScreen {
+//    if (self.isFullScreen) {
+//        return;
+//    }
+//
+//    self.playerSuperView = self.playView.superview;
+//    self.playerFrame = self.playView.frame;
+//    self.fullScreenBtnFrame = self.fullScreenBtn.frame;
+//
+//    CGRect rectInWindow = [self.playView convertRect:self.playView.bounds toView:[UIApplication sharedApplication].keyWindow];
+//    CGRect btnRect = [self.fullScreenBtn convertRect:self.fullScreenBtn.bounds toView:[UIApplication sharedApplication].keyWindow];
+//    [self.playView removeFromSuperview];
+//    [self.fullScreenBtn removeFromSuperview];
+//    self.playView.frame = rectInWindow;
+//    self.fullScreenBtn.frame = btnRect;
+//
+//
+//    [[UIApplication sharedApplication].keyWindow addSubview:self.playView];
+//    [[UIApplication sharedApplication].keyWindow addSubview:self.fullScreenBtn];
+//
+//    [UIView animateWithDuration:0.3 animations:^{
+//
+//        self.playView.transform = CGAffineTransformMakeRotation(M_PI_2);
+//        self.playView.bounds = CGRectMake(0, 0, CGRectGetHeight([UIApplication sharedApplication].keyWindow.bounds), CGRectGetWidth([UIApplication sharedApplication].keyWindow.bounds));
+//        self.playView.center = CGPointMake(CGRectGetMidX([UIApplication sharedApplication].keyWindow.bounds), CGRectGetMidY([UIApplication sharedApplication].keyWindow.bounds));
+//    } completion:^(BOOL finished) {
+//        [self.fullScreenBtn setTitle:@"退出全屏" forState:UIControlStateNormal];
+//        self.isFullScreen = YES;
+//    }];
+//}
+//
+///// 退出全屏模式
+//- (void)exitFullScreen {
+//    if (!self.isFullScreen) {
+//        return;
+//    }
+//
+//    CGRect frame = [self.playerSuperView convertRect:self.playerFrame toView:[UIApplication sharedApplication].keyWindow];
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.playView.transform = CGAffineTransformIdentity;
+//        self.playView.frame = frame;
+//    } completion:^(BOOL finished) {
+//        [self.playView removeFromSuperview];
+//        [self.fullScreenBtn removeFromSuperview];
+//        self.playView.frame = self.playerFrame;
+//        [self.playerSuperView addSubview:self.playView];
+//        [self.playerSuperView addSubview:self.fullScreenBtn];
+//        self.isFullScreen = NO;
+//        [self.fullScreenBtn setTitle:@"切为全屏" forState:UIControlStateNormal];
+//    }];
+//}
+
 
 - (void)initWebView
 {
@@ -125,7 +343,7 @@ HVPPlayerDelegate>
     [userContentController addUserScript:noneSelectScript];
     self.userContentController = userContentController;
 
-    _bestWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight + 400, SCREEN_WIDTH, SCREEN_HEIGHT  -kSafeAreaBottomHeight - kStatusBarHeight) configuration:config];
+    _bestWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT  - kStatusBarHeight - kSafeAreaBottomHeight) configuration:config];
     _bestWebView.backgroundColor = [UIColor whiteColor];
     _bestWebView.scrollView.delegate = self;
     _bestWebView.navigationDelegate = self;
@@ -419,6 +637,8 @@ HVPPlayerDelegate>
     } else if ([message.name isEqualToString:@"getuserLoginInfoToAppIos"]) {
         // 返回登录信息
         [self getUserInfoToApp];
+    } else if ([message.name isEqualToString:@"iosHvrToPage"]) {
+        [self addPlayer:message.body];
     }
 }
 
@@ -516,7 +736,8 @@ HVPPlayerDelegate>
     [self.bestWebView.configuration.userContentController addScriptMessageHandler:self name:@"getQrCode"];
     [self.bestWebView.configuration.userContentController addScriptMessageHandler:self name:@"useCamera"];
     [self.bestWebView.configuration.userContentController addScriptMessageHandler:self name:@"setUserInfoToApp"];
-    [self.bestWebView.configuration.userContentController addScriptMessageHandler:self name:@"getuserLoginInfoToAppIos"] ;
+    [self.bestWebView.configuration.userContentController addScriptMessageHandler:self name:@"getuserLoginInfoToAppIos"];
+    [self.bestWebView.configuration.userContentController addScriptMessageHandler:self name:@"iosHvrToPage"];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 // OC 调用JS方法 method 的js代码可往下看
        [self getUserInfoToApp];
@@ -620,6 +841,7 @@ HVPPlayerDelegate>
 //    }
 //    return _player;
 //}
+
 
 @end
 

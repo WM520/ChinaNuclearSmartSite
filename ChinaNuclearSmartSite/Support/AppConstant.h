@@ -15,6 +15,8 @@
 //#define APP_URL @"https://zhgd.hwgc.cn:8050/appv2/#/"
 
 
-#define APP_URL @"https://htci.rongzer.com/appv2/#/"
+//#define APP_URL @"https://htci.rongzer.com/appv2/#/"
+#define APP_URL @"https://zhgd.hwgc.cn:8050/appIosTest/#/"
+
 
 #endif /* AppConstant_h */
