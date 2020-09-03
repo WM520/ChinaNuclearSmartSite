@@ -114,6 +114,7 @@ HVPPlayerDelegate>
     }
     
     UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, PLAYER_HIGHT)];
+    contentView.backgroundColor = [UIColor colorWithHexString:@"#f2f2f2"];
     [self.view addSubview:contentView];
     self.contentView = contentView;
     
@@ -125,14 +126,16 @@ HVPPlayerDelegate>
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, kStatusBarHeight, SCREEN_WIDTH - 200, 44)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, kStatusBarHeight, 250, 44)];
     titleLabel.text = [[dic allKeys] containsObject:@"title"] ? [dic objectForKey:@"title"] : @"";
     titleLabel.textAlignment = NSTextAlignmentLeft;
     titleLabel.textColor = [UIColor colorWithHexString:@"#000000"];
     titleLabel.font = [UIFont systemFontOfSize:15];
     [contentView addSubview:titleLabel];
 //
-    UIView *playerView = [[UIView alloc] initWithFrame:CGRectMake(0, kSafeAreaTopHeight, SCREEN_WIDTH, PLAYER_HIGHT - kSafeAreaTopHeight)];
+    UIView *playerView = [[UIView alloc] initWithFrame:CGRectMake(15, kSafeAreaTopHeight, SCREEN_WIDTH - 30, PLAYER_HIGHT - kSafeAreaTopHeight)];
+    playerView.layer.cornerRadius = 5;
+    playerView.layer.masksToBounds = YES;
     [contentView addSubview:playerView];
     self.playerView = playerView;
 
@@ -140,9 +143,11 @@ HVPPlayerDelegate>
     _player.delegate = self;
     [_player startRealPlay:[[dic allKeys] containsObject:@"videoUrl"] ? [[dic objectForKey:@"videoUrl"] stringByReplacingOccurrencesOfString:@"'" withString:@""] : @""];
     
-    self.openButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 40, PLAYER_HIGHT - 40, 40, 40)];
+    self.openButton = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 55, PLAYER_HIGHT - 40, 40, 40)];
     self.openButton.backgroundColor = [UIColor colorWithHexString:@"#E2E2E2"];
     self.openButton.alpha = 0.6;
+    self.openButton.layer.cornerRadius = 2;
+    self.openButton.layer.masksToBounds = YES;
     [self.openButton setImage:[UIImage imageNamed:@"open"] forState:UIControlStateNormal];
     [contentView addSubview:self.openButton];
     [self.openButton addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
