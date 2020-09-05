@@ -15,9 +15,9 @@
 //#import <WebViewJavascriptBridge.h>
 #import <HikVideoPlayer/HikVideoPlayer.h>
 #import <HikVideoPlayer/HVPError.h>
-
+#import <Toast/Toast.h>
 #define PLAYER_HIGHT 300
-
+#define kIndicatorViewSize 50
 @interface ViewController ()
 <WKNavigationDelegate,
 WKUIDelegate,
@@ -42,6 +42,9 @@ HVPPlayerDelegate>
 @property (nonatomic, assign) CGRect playerFrame;  /// 记录原始frame
 @property (nonatomic, strong) UIView *playerSuperView;
 @property (nonatomic, assign) CGRect fullScreenBtnFrame;
+@property (nonatomic, strong) UILabel *flagLabel;
+@property (nonatomic, strong) UIActivityIndicatorView   *indicatorView;
+@property (nonatomic, assign) BOOL isPlaying;
 
 @end
 
@@ -56,18 +59,6 @@ HVPPlayerDelegate>
 //    rtsp://221.130.29.224:554/openUrl/uaOMHgk
 //    rtsp://221.130.29.224:554/openUrl/GBaZnva
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadUI:) name:@"ROLODE" object:nil];
-}
-
-/**
- 播放状态回调
-
- @param player 当前播放器
- @param playStatus 播放状态
- @param errorCode 错误码
- */
-- (void)player:(HVPPlayer *)player playStatus:(HVPPlayStatus)playStatus errorCode:(HVPErrorCode)errorCode
-{
-//    NSLog(@"------- %ld", (long)errorCode);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -96,8 +87,8 @@ HVPPlayerDelegate>
     self.contentView = nil;
     _player = nil;
     _playerView = nil;
+    self.flagLabel = nil;
     _isFullScreen = NO;
-    
     
     NSData *jsonData = [vaule dataUsingEncoding:NSUTF8StringEncoding];
     NSError *err;
@@ -136,8 +127,18 @@ HVPPlayerDelegate>
     UIView *playerView = [[UIView alloc] initWithFrame:CGRectMake(15, kSafeAreaTopHeight, SCREEN_WIDTH - 30, PLAYER_HIGHT - kSafeAreaTopHeight)];
     playerView.layer.cornerRadius = 5;
     playerView.layer.masksToBounds = YES;
+    playerView.backgroundColor = [UIColor blackColor];
     [contentView addSubview:playerView];
     self.playerView = playerView;
+    
+    UILabel *flagLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 130, SCREEN_WIDTH - 30, 20)];
+    flagLabel.textAlignment = NSTextAlignmentCenter;
+    flagLabel.text = @"获取视频失败，请检查设备和网络后重试";
+    flagLabel.font = [UIFont systemFontOfSize:15];
+    flagLabel.textColor = [UIColor whiteColor];
+    [playerView addSubview:flagLabel];
+    flagLabel.hidden = YES;
+    self.flagLabel = flagLabel;
 
     _player = [[HVPPlayer alloc] initWithPlayView:playerView];
     _player.delegate = self;
@@ -153,6 +154,64 @@ HVPPlayerDelegate>
     [self.openButton addTarget:self action:@selector(onClick) forControlEvents:UIControlEventTouchUpInside];
     
     self.bestWebView.frame = CGRectMake(0, PLAYER_HIGHT, SCREEN_WIDTH, SCREEN_HEIGHT  - PLAYER_HIGHT - kSafeAreaBottomHeight);
+    
+    [self.view addSubview:self.indicatorView];
+    self.indicatorView.frame = CGRectMake(SCREEN_WIDTH/2 - kIndicatorViewSize/2, kSafeAreaTopHeight + 125 - kIndicatorViewSize/2, kIndicatorViewSize, kIndicatorViewSize);
+}
+
+/**
+ 播放状态回调
+
+ @param player 当前播放器
+ @param playStatus 播放状态
+ @param errorCode 错误码
+ */
+- (void)player:(HVPPlayer *)player playStatus:(HVPPlayStatus)playStatus errorCode:(HVPErrorCode)errorCode
+{
+//    NSLog(@"%lu", (unsigned long)playStatus);
+//    if (HVPPlayStatusFailure == playStatus) {
+//
+//    } else if (HVPErrorCodeSuccess == playStatus) {
+//        self.flagLabel.hidden = NO;
+//        self.playerView.backgroundColor = [UIColor blackColor];
+//        self.player = nil;
+//    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // 如果有加载动画，结束加载动画
+        if ([self.indicatorView isAnimating]) {
+            [self.indicatorView stopAnimating];
+        }
+        _isPlaying = NO;
+        NSString *message;
+        // 预览时，没有HVPPlayStatusFinish状态，该状态表明录像片段已播放完
+        if (playStatus == HVPPlayStatusSuccess) {
+            _isPlaying = YES;
+            // 默认开启声音
+            self.openButton.hidden = NO;
+            [self.player enableSound:YES error:nil];
+        }
+        else if (playStatus == HVPPlayStatusFailure) {
+            if (errorCode == HVPErrorCodeURLInvalid) {
+                message = @"URL输入错误请检查URL或者URL已失效请更换URL";
+            }
+            else {
+                message = [NSString stringWithFormat:@"开启预览失败, 错误码是 : 0x%08lx", errorCode];
+            }
+            _player = nil;
+            _flagLabel.hidden = NO;
+            self.openButton.hidden = YES;
+        }
+        else if (playStatus == HVPPlayStatusException) {
+            // 预览过程中出现异常, 可能是取流中断，可能是其他原因导致的，具体根据错误码进行区分
+            // 做一些提示操作
+        }
+        if (message) {
+//            [self.view makeToast:message duration:2 position:CSToastPositionCenter];
+        }
+    });
+    
+    
 }
 
 // 页面返回
@@ -166,6 +225,7 @@ HVPPlayerDelegate>
         self.player = nil;
         self.playerView = nil;
         self.openButton = nil;
+        self.flagLabel = nil;
         self.bestWebView.frame = CGRectMake(0, kStatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT  - kStatusBarHeight - kSafeAreaBottomHeight);
     }];
 }
@@ -846,6 +906,13 @@ HVPPlayerDelegate>
 //    }
 //    return _player;
 //}
+
+- (UIActivityIndicatorView *)indicatorView {
+    if (!_indicatorView) {
+        _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    }
+    return _indicatorView;
+}
 
 
 @end

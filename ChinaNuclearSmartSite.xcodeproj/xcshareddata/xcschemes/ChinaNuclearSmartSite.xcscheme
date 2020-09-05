@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0A021BE5235AC26C0017D8BB"
-               BuildableName = "&#x667a;&#x6167;&#x5de5;&#x5730;.app"
+               BuildableName = "&#x4e2d;&#x6838;&#x667a;&#x6167;&#x5de5;&#x5730;.app"
                BlueprintName = "ChinaNuclearSmartSite"
                ReferencedContainer = "container:ChinaNuclearSmartSite.xcodeproj">
             </BuildableReference>
@@ -65,7 +65,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0A021BE5235AC26C0017D8BB"
-            BuildableName = "&#x667a;&#x6167;&#x5de5;&#x5730;.app"
+            BuildableName = "&#x4e2d;&#x6838;&#x667a;&#x6167;&#x5de5;&#x5730;.app"
             BlueprintName = "ChinaNuclearSmartSite"
             ReferencedContainer = "container:ChinaNuclearSmartSite.xcodeproj">
          </BuildableReference>
@@ -82,7 +82,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0A021BE5235AC26C0017D8BB"
-            BuildableName = "&#x667a;&#x6167;&#x5de5;&#x5730;.app"
+            BuildableName = "&#x4e2d;&#x6838;&#x667a;&#x6167;&#x5de5;&#x5730;.app"
             BlueprintName = "ChinaNuclearSmartSite"
             ReferencedContainer = "container:ChinaNuclearSmartSite.xcodeproj">
          </BuildableReference>
