@@ -16,6 +16,7 @@
 #import <HikVideoPlayer/HikVideoPlayer.h>
 #import <HikVideoPlayer/HVPError.h>
 #import <Toast/Toast.h>
+#import "WMHttpNewManager.h"
 #define PLAYER_HIGHT 300
 #define kIndicatorViewSize 50
 @interface ViewController ()
@@ -64,6 +65,7 @@ HVPPlayerDelegate>
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self request];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -74,11 +76,47 @@ HVPPlayerDelegate>
 #pragma mark - private methods
 - (void)reloadUI:(NSNotification *)notification
 {
+
     NSDictionary * useInfo = notification.userInfo;
     NSString * url = [useInfo objectForKey:@"url"];
     dispatch_sync(dispatch_get_main_queue(), ^{
         [self.bestWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
     });
+}
+
+- (void)request
+{
+    //    http://htci.rongzer.com/app-web/api/version/upgrade/getNewVersion?orders=1&search_EQ_mobileType=IOS
+    
+    [[WMHttpNewManager sharedManager] GET:@"/app-web/api/version/upgrade/getNewVersion" parameters:@{@"orders":@"1",@"search_EQ_mobileType":@"IOS"} progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSDictionary *dic = responseObject;
+        BOOL isNew = [dic objectForKey:@"isNew"];
+        NSLog(@"%d", isNew);
+        if (isNew) {
+            NSDictionary *data = [dic objectForKey:@"data"];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"您有新版本更新~" preferredStyle:1];
+            NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc] initWithString:@"您有新版本更新~"];
+            [AttributedStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, [[AttributedStr string] length])];
+            [alert setValue:AttributedStr forKey:@"attributedMessage"];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"立即更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[data objectForKey:@"links"]]];
+            }];
+            [okAction setValue:[UIColor colorWithHexString:@"#333333"] forKey:@"titleTextColor"];
+            
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"离开" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+            }];
+            [cancel setValue:[UIColor colorWithHexString:@"#666666"] forKey:@"titleTextColor"];
+            
+            [alert addAction:okAction];
+            [alert addAction:cancel];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
 }
 
 - (void)addPlayer:(id)vaule

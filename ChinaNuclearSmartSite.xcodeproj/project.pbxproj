@@ -36,6 +36,8 @@
 		0A15C3972360636E00661D23 /* Flashlight_N@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A15C38A2360636D00661D23 /* Flashlight_N@2x.png */; };
 		0A15C3982360636E00661D23 /* ScanQR2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A15C38B2360636D00661D23 /* ScanQR2@2x.png */; };
 		0A15C3992360636E00661D23 /* Flashlight_H@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A15C38C2360636D00661D23 /* Flashlight_H@2x.png */; };
+		0A1F61D9250B548E0026DFAF /* WMHttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1F61D7250B548E0026DFAF /* WMHttpManager.m */; };
+		0A1F61DC250B56A80026DFAF /* WMHttpNewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1F61DB250B56A80026DFAF /* WMHttpNewManager.m */; };
 		0A3A05CA250226B8006342FA /* Toast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3A05C82502256F006342FA /* Toast.framework */; };
 		0A3A05CB250226B8006342FA /* Toast.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3A05C82502256F006342FA /* Toast.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0A52FB3523668DB40074EE65 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 0A52FB2D23668DB40074EE65 /* index.html */; };
@@ -140,6 +142,10 @@
 		0A15C38A2360636D00661D23 /* Flashlight_N@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flashlight_N@2x.png"; sourceTree = "<group>"; };
 		0A15C38B2360636D00661D23 /* ScanQR2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScanQR2@2x.png"; sourceTree = "<group>"; };
 		0A15C38C2360636D00661D23 /* Flashlight_H@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flashlight_H@2x.png"; sourceTree = "<group>"; };
+		0A1F61D7250B548E0026DFAF /* WMHttpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WMHttpManager.m; path = http/WMHttpManager.m; sourceTree = "<group>"; };
+		0A1F61D8250B548E0026DFAF /* WMHttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WMHttpManager.h; path = http/WMHttpManager.h; sourceTree = "<group>"; };
+		0A1F61DA250B56A80026DFAF /* WMHttpNewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMHttpNewManager.h; sourceTree = "<group>"; };
+		0A1F61DB250B56A80026DFAF /* WMHttpNewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMHttpNewManager.m; sourceTree = "<group>"; };
 		0A3A05C82502256F006342FA /* Toast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Toast.framework; sourceTree = "<group>"; };
 		0A52FB2D23668DB40074EE65 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		0A52FB2F23668DB40074EE65 /* index.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = index.css; sourceTree = "<group>"; };
@@ -217,6 +223,8 @@
 		0A021BE8235AC26C0017D8BB /* ChinaNuclearSmartSite */ = {
 			isa = PBXGroup;
 			children = (
+				0A1F61D8250B548E0026DFAF /* WMHttpManager.h */,
+				0A1F61D7250B548E0026DFAF /* WMHttpManager.m */,
 				0A3A05C82502256F006342FA /* Toast.framework */,
 				0AF666FC24FCE4A100DE05F5 /* HikVideoPlayer.framework */,
 				0A55C65F235DB364003D1636 /* ChinaNuclearSmartSite.entitlements */,
@@ -239,6 +247,8 @@
 				0A021BF7235AC2710017D8BB /* LaunchScreen.storyboard */,
 				0A021BFA235AC2710017D8BB /* Info.plist */,
 				0A021BFB235AC2710017D8BB /* main.m */,
+				0A1F61DA250B56A80026DFAF /* WMHttpNewManager.h */,
+				0A1F61DB250B56A80026DFAF /* WMHttpNewManager.m */,
 			);
 			path = ChinaNuclearSmartSite;
 			sourceTree = "<group>";
@@ -612,9 +622,11 @@
 			files = (
 				0A021C20235ADE250017D8BB /* AppDelegate+push.m in Sources */,
 				0A92183623613A2F00AFD08B /* AppJSObject.m in Sources */,
+				0A1F61DC250B56A80026DFAF /* WMHttpNewManager.m in Sources */,
 				0A92183F2362DDB000AFD08B /* WebViewController.m in Sources */,
 				0A15C3912360636E00661D23 /* ZFMaskView.m in Sources */,
 				0A021BF1235AC26C0017D8BB /* ViewController.m in Sources */,
+				0A1F61D9250B548E0026DFAF /* WMHttpManager.m in Sources */,
 				0A55C663235DDB2E003D1636 /* UIColor+expanded.m in Sources */,
 				0A52FB3C2366E4360074EE65 /* UserModel.m in Sources */,
 				0A15C38F2360636E00661D23 /* ZFConst.m in Sources */,
