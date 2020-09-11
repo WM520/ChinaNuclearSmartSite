@@ -36,6 +36,7 @@
 		0A15C3972360636E00661D23 /* Flashlight_N@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A15C38A2360636D00661D23 /* Flashlight_N@2x.png */; };
 		0A15C3982360636E00661D23 /* ScanQR2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A15C38B2360636D00661D23 /* ScanQR2@2x.png */; };
 		0A15C3992360636E00661D23 /* Flashlight_H@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A15C38C2360636D00661D23 /* Flashlight_H@2x.png */; };
+		0A1F61DF250B74ED0026DFAF /* WMHttpNewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1F61DE250B74ED0026DFAF /* WMHttpNewManager.m */; };
 		0A3A05CA250226B8006342FA /* Toast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3A05C82502256F006342FA /* Toast.framework */; };
 		0A3A05CB250226B8006342FA /* Toast.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3A05C82502256F006342FA /* Toast.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0A52FB3523668DB40074EE65 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 0A52FB2D23668DB40074EE65 /* index.html */; };
@@ -140,6 +141,8 @@
 		0A15C38A2360636D00661D23 /* Flashlight_N@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flashlight_N@2x.png"; sourceTree = "<group>"; };
 		0A15C38B2360636D00661D23 /* ScanQR2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ScanQR2@2x.png"; sourceTree = "<group>"; };
 		0A15C38C2360636D00661D23 /* Flashlight_H@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Flashlight_H@2x.png"; sourceTree = "<group>"; };
+		0A1F61DD250B74ED0026DFAF /* WMHttpNewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMHttpNewManager.h; sourceTree = "<group>"; };
+		0A1F61DE250B74ED0026DFAF /* WMHttpNewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMHttpNewManager.m; sourceTree = "<group>"; };
 		0A3A05C82502256F006342FA /* Toast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Toast.framework; sourceTree = "<group>"; };
 		0A52FB2D23668DB40074EE65 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		0A52FB2F23668DB40074EE65 /* index.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = index.css; sourceTree = "<group>"; };
@@ -217,6 +220,8 @@
 		0A021BE8235AC26C0017D8BB /* ChinaNuclearSmartSite */ = {
 			isa = PBXGroup;
 			children = (
+				0A1F61DD250B74ED0026DFAF /* WMHttpNewManager.h */,
+				0A1F61DE250B74ED0026DFAF /* WMHttpNewManager.m */,
 				0A3A05C82502256F006342FA /* Toast.framework */,
 				0AF666FC24FCE4A100DE05F5 /* HikVideoPlayer.framework */,
 				0A55C65F235DB364003D1636 /* ChinaNuclearSmartSite.entitlements */,
@@ -627,6 +632,7 @@
 				0A021C38235ADF460017D8BB /* AVAsset+WMAdditons.m in Sources */,
 				0A15C38D2360636E00661D23 /* UIImage+Zirkfied.m in Sources */,
 				0A021C39235ADF460017D8BB /* UIAlertView+WMAddtions.m in Sources */,
+				0A1F61DF250B74ED0026DFAF /* WMHttpNewManager.m in Sources */,
 				0A15C38E2360636E00661D23 /* UIColor+Zirkfied.m in Sources */,
 				0A021C3B235ADF460017D8BB /* NSTimer+WMAddtions.m in Sources */,
 				0A021C3A235ADF460017D8BB /* UIView+WMAddtions.m in Sources */,
