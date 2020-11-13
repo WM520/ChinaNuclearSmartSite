@@ -16,7 +16,7 @@
     static WMHttpNewManager * manager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        manager = [[self alloc] initWithBaseURL:[NSURL URLWithString:@"http://htci.rongzer.com"]];
+        manager = [[self alloc] initWithBaseURL:[NSURL URLWithString:@"https://zhgd.hwgc.cn:8050"]];
     });
     return manager;
 }
